@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:heroes/src/features/signup/data/signup.data.dart';
+import 'package:heroes/src/features/signup/service/signup.service.dart';
 
 class SingupPage extends StatelessWidget {
   @override
@@ -18,7 +20,7 @@ class _Signup extends State<Signup> {
   late TextEditingController _lastname;
   late TextEditingController _email;
   late TextEditingController _password;
-  
+  late SignupService _signupService;
   @override
   void initState() {
     // TODO: implement initState
@@ -27,10 +29,17 @@ class _Signup extends State<Signup> {
     _lastname = TextEditingController();
     _email = TextEditingController();
     _password = TextEditingController();
+    _signupService = SignupService();
   }
 
   void onSaveUser() {
-    print("Name: ${_firstname.text}");
+    String fname = _firstname.text;
+    String lname = _lastname.text;
+    String email = _email.text;
+    String password = _password.text;
+
+    SignupDTO signup = SignupDTO(fname, lname, email, password);
+    _signupService.signupUser(signup);
   }
 
   @override
@@ -38,6 +47,7 @@ class _Signup extends State<Signup> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Signup"),
+        backgroundColor: Colors.green[300],
       ),
       body: Container(
         padding: const EdgeInsets.all(10.0),
