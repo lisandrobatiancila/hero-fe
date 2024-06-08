@@ -3,6 +3,7 @@ class SignupDTO {
   String lastName;
   String email;
   String password;
+  String? registerType;
 
-  SignupDTO(this.firstName, this.lastName, this.email, this.password);
+  SignupDTO(this.firstName, this.lastName, this.email, this.password, this.registerType);
 }

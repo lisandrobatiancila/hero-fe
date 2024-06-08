@@ -21,6 +21,8 @@ class _Signup extends State<Signup> {
   late TextEditingController _email;
   late TextEditingController _password;
   late SignupService _signupService;
+  final List<String> _loginOptionList = ["User", "Admin", "Heroe"];
+  String? _dropDownValue = "User";
   @override
   void initState() {
     // TODO: implement initState
@@ -30,6 +32,7 @@ class _Signup extends State<Signup> {
     _email = TextEditingController();
     _password = TextEditingController();
     _signupService = SignupService();
+    _dropDownValue = _loginOptionList.first;
   }
 
   void onSaveUser() {
@@ -38,7 +41,11 @@ class _Signup extends State<Signup> {
     String email = _email.text;
     String password = _password.text;
 
-    SignupDTO signup = SignupDTO(fname, lname, email, password);
+    SignupDTO signup = SignupDTO(fname, lname, email, password, _dropDownValue);
+    _firstname.text = "";
+    _lastname.text = "";
+    _email.text = "";
+    _password.text = "";
     _signupService.signupUser(signup);
   }
 
@@ -54,6 +61,7 @@ class _Signup extends State<Signup> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
               controller: _firstname,
@@ -72,6 +80,7 @@ class _Signup extends State<Signup> {
               decoration: const InputDecoration(
                 labelText: "Email"
               ),
+              keyboardType: TextInputType.emailAddress,
             ),
             TextFormField(
               controller: _password,
@@ -83,18 +92,42 @@ class _Signup extends State<Signup> {
             const SizedBox(
               height: 20.0,
             ),
-            FilledButton(
-              onPressed: onSaveUser,
-              style: FilledButton.styleFrom(
-                minimumSize: const Size(200.0, 50.0),
-                backgroundColor: Colors.green[300],
-              ),
-              child: const Text(
-                "Save",
-                style: TextStyle(
-                  fontSize: 18.0
+            const Text(
+              "Login as"
+            ),
+            DropdownButton<String>(
+              padding: const EdgeInsets.all(10.0),
+              
+              value: _dropDownValue,
+              items: _loginOptionList.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value)
+                  );
+              }).toList(),
+              onChanged: (String? value) {
+                setState(() {
+                  _dropDownValue = value as String;
+                });
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FilledButton(
+                  onPressed: onSaveUser,
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(200.0, 50.0),
+                    backgroundColor: Colors.green[300],
+                  ),
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(
+                      fontSize: 18.0
+                    ),
+                  ),
                 ),
-              ),
+              ],
             )
           ],
         ),
