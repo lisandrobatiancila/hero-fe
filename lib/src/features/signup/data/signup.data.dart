@@ -7,3 +7,9 @@ class SignupDTO {
 
   SignupDTO(this.firstName, this.lastName, this.email, this.password, this.registerType);
 }
+
+class SignupResponseDTO {
+  String message;
+  int code;
+  SignupResponseDTO (this.message, this.code);
+}

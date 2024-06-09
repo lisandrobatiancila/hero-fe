@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroes/src/features/login/presentation/index.dart';
 import 'package:heroes/src/features/signup/presentation/index.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,6 +17,16 @@ class Home extends StatefulWidget {
 
 
 class _Home extends State<Home> {
+
+  void onLogin() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage()
+      )
+    );
+  }
+
   void onSingup() {
     Navigator.push(context, 
     MaterialPageRoute(
@@ -48,7 +59,7 @@ class _Home extends State<Home> {
               height: 200,
             ),
             FilledButton(
-                onPressed: (){}, 
+                onPressed: onLogin, 
                 style: FilledButton.styleFrom(
                 backgroundColor: Colors.green[200],
                 minimumSize: const Size(200.0, 50.0)

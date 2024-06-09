@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class SignupService {
   Future<SignupModel> signupUser(SignupDTO signupModel) async {
     var response = await http.post(
-      Uri.parse("http://10.10.8.131:3000/signup"),
+      Uri.parse("http://192.168.23.134:3000/signup"),
       body: <String, String ?> {
         'firstname': signupModel.firstName,
         'lastname': signupModel.lastName,
@@ -17,9 +17,10 @@ class SignupService {
         'registerType': signupModel.registerType,
       }
     );
-    
-    // Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
+    var decode = jsonDecode(response.body) as Map<String, dynamic>;
+    var message = decode.entries.elementAt(0).value;
+    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT);
 
-    return SignupModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+    return SignupModel.fromJson(decode);
   }
 }
