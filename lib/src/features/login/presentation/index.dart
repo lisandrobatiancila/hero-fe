@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:heroes/src/features/dashboard/presentation/index.dart';
 import 'package:heroes/src/features/login/data/loginDTO.dart';
 import 'package:heroes/src/features/login/service/login.service.dart';
 
@@ -39,10 +40,21 @@ class _Login extends State<Login> {
     String password = _password.text;
     LoginDTO loginDTO = LoginDTO(email, password);
 
+
     var resp = _loginService.loginUser(loginDTO);
-    print("RESP >> ");
+    var code = 0;
     resp.then((response) => {
-      Fluttertoast.showToast(msg: response.message)
+      code = response.code,
+      if (code == 200) {
+        _email.text = "",
+        _password.text = "",
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DashBoard())
+        )
+      } else {
+        Fluttertoast.showToast(msg: response.message)
+      }
     });
   }
 

@@ -1,14 +1,16 @@
 import 'dart:convert';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:heroes/src/features/shared/ip/shared.constant.dart';
 import 'package:heroes/src/features/signup/data/signup.data.dart';
 import 'package:heroes/src/features/signup/domain/signup.domain.dart';
 import 'package:http/http.dart' as http;
 
 class SignupService {
   Future<SignupModel> signupUser(SignupDTO signupModel) async {
+    SharedConstants _sharedConstants = SharedConstants();
     var response = await http.post(
-      Uri.parse("http://10.10.8.131:3000/signup"),
+      Uri.parse("http://${_sharedConstants.getIp()}:3000/signup"),
       body: <String, String ?> {
         'firstname': signupModel.firstName,
         'lastname': signupModel.lastName,
