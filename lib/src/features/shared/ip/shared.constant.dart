@@ -1,5 +1,5 @@
 class SharedConstants {
   String getIp() {
-    return "192.168.23.134";
+    return "10.10.8.131";
   }
 }

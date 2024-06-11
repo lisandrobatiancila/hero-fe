@@ -34,6 +34,10 @@ class _DashBaord extends State<DashBoard> {
         ],
       ),
     ),
+    onPopInvoked: (context) => {
+      print("Tests"),
+      print(context)
+    },
     );
   }
 }
