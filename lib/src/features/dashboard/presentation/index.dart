@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroes/src/features/dashboard/service/dashboard.service.dart';
 
 class DashBoardPage extends StatelessWidget {
   @override
@@ -15,8 +16,14 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBaord extends State<DashBoard> {
+  late DashBoardService _dashBoardService;
   @override
-  
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _dashBoardService = DashBoardService();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -27,10 +34,17 @@ class _DashBaord extends State<DashBoard> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.green[300],
       ),
-      body: const Column(
+      body: Column(
         children: <Widget>[
-          Text("Sample1"),
-          Text("Sample2"),
+          const Text("Sample1"),
+          const Text("Sample2"),
+          const Text("Sample3"),
+          FilledButton(
+            onPressed: () {
+              var records = _dashBoardService.getAllHeroes();
+            },
+            child: Text("Get heroes"),
+          )
         ],
       ),
     ),
