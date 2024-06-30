@@ -41,9 +41,15 @@ class _DashBaord extends State<DashBoard> {
           const Text("Sample3"),
           FilledButton(
             onPressed: () {
-              var records = _dashBoardService.getAllHeroes();
+             var rec = _dashBoardService.getAllHeroes();
+             
+              rec.then((res) => {
+                for(var r in res) {
+                  print(r.name)
+                }
+              });
             },
-            child: Text("Get heroes"),
+            child: const Text("Get heroes"),
           )
         ],
       ),
