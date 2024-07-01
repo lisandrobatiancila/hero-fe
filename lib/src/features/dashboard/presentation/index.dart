@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:heroes/src/features/dashboard/service/dashboard.service.dart';
+import 'package:heroes/src/features/shared/data/hero.domain.dart';
 
 class DashBoardPage extends StatelessWidget {
   @override
@@ -17,11 +18,19 @@ class DashBoard extends StatefulWidget {
 
 class _DashBaord extends State<DashBoard> {
   late DashBoardService _dashBoardService;
+  late List<HeroDomain> heroList;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _dashBoardService = DashBoardService();
+    heroList = [];
+
+    getAllHeroList();
+  }
+
+  void getAllHeroList() async{
+    heroList = await _dashBoardService.getAllHeroes();
   }
 
   @override
@@ -34,25 +43,22 @@ class _DashBaord extends State<DashBoard> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.green[300],
       ),
-      body: Column(
-        children: <Widget>[
-          const Text("Sample1"),
-          const Text("Sample2"),
-          const Text("Sample3"),
-          FilledButton(
-            onPressed: () {
-             var rec = _dashBoardService.getAllHeroes();
-             
-              rec.then((res) => {
-                for(var r in res) {
-                  print(r.name)
-                }
-              });
-            },
-            child: const Text("Get heroes"),
-          )
-        ],
-      ),
+      body: ListView.builder(itemCount: heroList.length, itemBuilder: (context, index) {
+        return Card(
+            elevation: 3.0,
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Name: ${heroList[index].name}"),
+                  Text("Power: ${heroList[index].power}"),
+                  Text("Desc.: ${heroList[index].description}"),
+                ],
+              ),
+            ),
+          );
+      }),
     ),
     onPopInvoked: (context) => {
       print("Tests"),
