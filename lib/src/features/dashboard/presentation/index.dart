@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:heroes/src/features/dashboard/service/dashboard.service.dart';
+import 'package:heroes/src/features/details/presentation/index.dart';
 import 'package:heroes/src/features/shared/data/hero.domain.dart';
 
 class DashBoardPage extends StatelessWidget {
@@ -33,6 +34,10 @@ class _DashBaord extends State<DashBoard> {
 
   void getAllHeroList() async{
     heroList = await _dashBoardService.getAllHeroes();
+  }
+
+  void onViewHeroDetials (HeroDomain heroList) {
+    Navigator.push(context, MaterialPageRoute(builder: (builder) => HeroDetailPage(heroList: heroList,)));
   }
 
   @override
@@ -70,7 +75,9 @@ class _DashBaord extends State<DashBoard> {
                       ),
                       const Text(" "),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          onViewHeroDetials(heroList[index]);
+                        },
                         style: OutlinedButton.styleFrom(
                           backgroundColor: Colors.blue[500],
                           textStyle: const TextStyle(fontSize: 18.0),
