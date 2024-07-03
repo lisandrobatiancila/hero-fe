@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:heroes/src/features/dashboard/service/dashboard.service.dart';
 import 'package:heroes/src/features/shared/data/hero.domain.dart';
@@ -54,6 +56,34 @@ class _DashBaord extends State<DashBoard> {
                   Text("Name: ${heroList[index].name}"),
                   Text("Power: ${heroList[index].power}"),
                   Text("Desc.: ${heroList[index].description}"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      OutlinedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green[300],
+                          textStyle: const TextStyle(fontSize: 18.0),
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text("Hire"),
+                      ),
+                      const Text(" "),
+                      OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Colors.blue[500],
+                          textStyle: const TextStyle(fontSize: 18.0),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(width: 5.0, color: Colors.red),
+                            borderRadius: BorderRadius.circular(100.0),
+                          )
+                        ),
+                        child: const Text("Details"),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
