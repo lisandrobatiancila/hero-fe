@@ -2,15 +2,18 @@ class HeroDescription {
   List<Map<String, dynamic>> heroDescription = [
     {
       "id": 4,
-      "name": "Batman"
+      "name": "Batman",
+      "description": "['Rich kid', 'Smart', 'Bat', 'Trained', 'Mobile', 'Philantrophist']"
     },
     {
       "id": 1,
-      "name": "Superman"
+      "name": "Superman",
+      "description": "['Crypto', 'Alien']"
     },
     {
       "id": 3,
-      "name": "Flash"
+      "name": "Flash",
+      "description": ""
     }
   ];
 
