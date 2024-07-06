@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:heroes/src/features/dashboard/presentation/index.dart';
 import 'package:heroes/src/features/home/presentation/index.dart';
 
 void main() {
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: HomePage(),
+      routes: {
+        "name": (context) => DashBoardPage()
+      },
     );
   }
 }

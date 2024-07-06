@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 // import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -40,22 +41,26 @@ class _Login extends State<Login> {
     String password = _password.text;
     LoginDTO loginDTO = LoginDTO(email, password);
 
-
-    var resp = _loginService.loginUser(loginDTO);
-    var code = 0;
-    resp.then((response) => {
-      code = response.code,
-      if (code == 200) {
-        _email.text = "",
-        _password.text = "",
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DashBoard())
-        )
-      } else {
-        Fluttertoast.showToast(msg: response.message)
-      }
-    });
+    try{
+      var resp = _loginService.loginUser(loginDTO);
+      var code = 0;
+      resp.then((response) => {
+        code = response.code,
+        if (code == 200) {
+          _email.text = "",
+          _password.text = "",
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DashBoard())
+          )
+        } else {
+          Fluttertoast.showToast(msg: response.message)
+        }
+      });
+    }
+    catch(error) {
+      log(error.toString());
+    }
   }
 
   @override

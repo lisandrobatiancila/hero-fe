@@ -10,9 +10,8 @@ import 'package:http/http.dart' as http;
 class LoginService {
   Future<LoginModel> loginUser(LoginDTO loginDTO) async {
     try{
-      SharedConstants _sharedConstants = SharedConstants();
       var response = await http.post(
-        Uri.parse("http://${_sharedConstants.getIp()}:3000/login"),
+        Uri.parse("http://${SharedConstants.ip}:3000/login"),
         body: <String, String> {
           'email': loginDTO.email,
           'password': loginDTO.password,
@@ -24,6 +23,7 @@ class LoginService {
       return LoginModel.fromJson(decode);
     }
     catch(error) {
+      print("ERROR HERE ---- ");
       if (error is SocketException) {
         Fluttertoast.showToast(msg: "No network detected");
       }

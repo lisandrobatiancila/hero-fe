@@ -7,9 +7,8 @@ import 'package:http/http.dart' as http;
 
 class DashBoardService {
   Future<List<HeroDomain>> getAllHeroes() async {
-    SharedConstants _sharedConstants = SharedConstants();
     var response = await http.get(
-      Uri.parse("http://${_sharedConstants.getIp()}:3000/dashboard"),
+      Uri.parse("http://${SharedConstants.ip}:3000/dashboard"),
     );
 
     var decode = jsonDecode(response.body) as List<dynamic>;

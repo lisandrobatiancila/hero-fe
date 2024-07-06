@@ -8,9 +8,8 @@ import 'package:http/http.dart' as http;
 
 class SignupService {
   Future<SignupModel> signupUser(SignupDTO signupModel) async {
-    SharedConstants _sharedConstants = SharedConstants();
     var response = await http.post(
-      Uri.parse("http://${_sharedConstants.getIp()}:3000/signup"),
+      Uri.parse("http://${SharedConstants.ip}:3000/signup"),
       body: <String, String ?> {
         'firstname': signupModel.firstName,
         'lastname': signupModel.lastName,
