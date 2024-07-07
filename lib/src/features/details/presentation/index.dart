@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:heroes/src/features/shared/data/hero.domain.dart';
+import 'package:heroes/src/shared/data/hero.domain.dart';
 import 'package:heroes/src/utility/hero.description.dart';
 import 'package:heroes/src/utility/string.dart';
 import 'package:bulleted_list/bulleted_list.dart';

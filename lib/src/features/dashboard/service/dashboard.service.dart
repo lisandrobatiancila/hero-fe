@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:heroes/src/features/shared/data/hero.data.dart';
-import 'package:heroes/src/features/shared/data/hero.domain.dart';
-import 'package:heroes/src/features/shared/ip/shared.constant.dart';
+import 'package:heroes/src/shared/data/hero.data.dart';
+import 'package:heroes/src/shared/data/hero.domain.dart';
+import 'package:heroes/src/shared/ip/shared.constant.dart';
 import 'package:http/http.dart' as http;
 
 class DashBoardService {

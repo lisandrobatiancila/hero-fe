@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heroes/src/features/login/data/loginDTO.dart';
 import 'package:heroes/src/features/login/domain/login.domain.dart';
-import 'package:heroes/src/features/shared/ip/shared.constant.dart';
+import 'package:heroes/src/shared/ip/shared.constant.dart';
 import 'package:http/http.dart' as http;
 
 class LoginService {

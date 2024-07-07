@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:heroes/src/features/dashboard/service/dashboard.service.dart';
 import 'package:heroes/src/features/details/presentation/index.dart';
 import 'package:heroes/src/features/hire/presentation/index.dart';
-import 'package:heroes/src/features/shared/data/hero.domain.dart';
+import 'package:heroes/src/shared/data/hero.domain.dart';
 
 class DashBoardPage extends StatelessWidget {
   @override
@@ -73,6 +73,7 @@ class _DashBaord extends State<DashBoard> {
                 Text("Name: ${heroList[index].name}"),
                 Text("Power: ${heroList[index].power}"),
                 Text("Desc.: ${heroList[index].description}"),
+                Text("Total Hired: ${heroList[index].hiredCount}"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[

@@ -10,4 +10,7 @@ class StringManipulation {
     }
     return newWord;
   }
+  String parseNumberToString(int param) {
+    return param.toString();
+  }
 }

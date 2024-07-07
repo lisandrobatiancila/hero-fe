@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:heroes/src/features/hire/domain/hire.test.dart';
-import 'package:heroes/src/features/shared/data/hero.domain.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:heroes/src/features/hire/data/hireDTO.dart';
+import 'package:heroes/src/features/hire/domain/hire.domain.dart';
+import 'package:heroes/src/features/hire/service/hire.service.dart';
+import 'package:heroes/src/shared/data/hero.domain.dart';
 
 class HirePage extends StatefulWidget{
   HirePage({required this.hero});
@@ -13,17 +16,36 @@ class HirePage extends StatefulWidget{
 
 class _HirePage extends State<HirePage> {
   late HeroDomain hero;
-  List<HireTestData> records = [
-    HireTestData(quantity: 10, name: "Tests"),
-    HireTestData(quantity: 11, name: "Tests1"),
-    HireTestData(quantity: 12, name: "Tests2"),
-  ];
+  HireHeroService _hireHeroService = HireHeroService();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  // List<HireTestData> records = [
+  //   HireTestData(quantity: 10, name: "Tests"),
+  //   HireTestData(quantity: 11, name: "Tests1"),
+  //   HireTestData(quantity: 12, name: "Tests2"),
+  // ];
   
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     hero = widget.hero;
+  }
+
+  void onSaveHiredHero () {
+    if (_formKey.currentState!.validate()) {
+      HireHeroDTO hireHero = HireHeroDTO(hero.id, _firstNameController.text, _lastNameController.text);
+      var response = _hireHeroService.hireHero(hireHero);
+
+      response.then((value) {
+        var code = value?.code;
+        var message = value?.message ?? "";
+        if (code == 200) {
+          Fluttertoast.showToast(msg: message);
+        }
+      });
+    }
   }
 
   @override
@@ -66,30 +88,46 @@ class _HirePage extends State<HirePage> {
                     ),
                   ),
                   Text("Name: ${hero.name}"),
-                  Text("Description: ${hero.description}")
+                  Text("Description: ${hero.description}"),
+                  Text("Total Hired: ${hero.hiredCount}")
                 ],
               ),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 20.0),
               child: Form(
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
+                      controller: _firstNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter firstname";
+                        }
+                        return null;
+                      },
                       decoration: const InputDecoration(
                         labelText: "Firstname"
                       ),
                     ),
                     TextFormField(
+                      controller: _lastNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter lastname";
+                        }
+                        return null;
+                      },
                       decoration: const InputDecoration(
                         labelText: "Lastname"
                       ),
                     ),
-                    textFormFieldCustom("Tests", decoration: InputDecoration(labelText: "tests")),
+                    // textFormFieldCustom("Tests", decoration: InputDecoration(labelText: "tests")),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: onSaveHiredHero,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green[300],
                         ),
@@ -110,40 +148,40 @@ class _HirePage extends State<HirePage> {
                 ),
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              // physics: const NeverScrollableScrollPhysics(),
-              itemCount: records.length, 
-              itemBuilder: (context, index) {
-                return Column(
-                  children: <Widget>[
-                    Text(records[index].name),
-                    Text('Quanity ${records[index].quantity}'),
-                    ElevatedButton(onPressed: () {
-                      records[index].quantity += 1;
-                      setState(() {
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   // physics: const NeverScrollableScrollPhysics(),
+            //   itemCount: records.length, 
+            //   itemBuilder: (context, index) {
+            //     return Column(
+            //       children: <Widget>[
+            //         Text(records[index].name),
+            //         Text('Quanity ${records[index].quantity}'),
+            //         ElevatedButton(onPressed: () {
+            //           records[index].quantity += 1;
+            //           setState(() {
                         
-                      });
-                    }, 
-                    child: Icon(Icons.add))
-                  ],
-                );
-            })
+            //           });
+            //         }, 
+            //         child: Icon(Icons.add))
+            //       ],
+            //     );
+            // })
           ],
         ),
       ),
     );
   }
 
-  Widget textFormFieldCustom (String hint, {InputDecoration? decoration}) {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: hint
-      )
-    );
-  }
+  // Widget textFormFieldCustom (String hint, {InputDecoration? decoration}) {
+  //   return TextFormField(
+  //     decoration: InputDecoration(
+  //       labelText: hint
+  //     )
+  //   );
+  // }
 
-  Widget customContainer () {
-    return Image.asset("images/one.jpeg");
-  }
+  // Widget customContainer () {
+  //   return Image.asset("images/one.jpeg");
+  // }
 }
