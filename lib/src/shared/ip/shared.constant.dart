@@ -1,4 +1,4 @@
 class SharedConstants {
-  static const String ip = "10.10.8.142";
+  static const String ip = "192.168.119.134";
   
 }

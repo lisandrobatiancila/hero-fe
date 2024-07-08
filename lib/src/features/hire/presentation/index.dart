@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heroes/src/features/hire/data/hireDTO.dart';
 import 'package:heroes/src/features/hire/domain/hire.domain.dart';
@@ -18,9 +17,9 @@ class HirePage extends StatefulWidget{
 
 class _HirePage extends State<HirePage> {
   late HeroDomain hero;
-  HireHeroService _hireHeroService = HireHeroService();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
+  final HireHeroService _hireHeroService = HireHeroService();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   // List<HireTestData> records = [
   //   HireTestData(quantity: 10, name: "Tests"),
@@ -73,7 +72,7 @@ class _HirePage extends State<HirePage> {
                     ),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         blurRadius: 3,
                         color: Colors.grey, 

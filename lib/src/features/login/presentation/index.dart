@@ -11,14 +11,16 @@ import 'package:heroes/src/shared/provider/account.provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-
+  AccountProvider accountProvider = AccountProvider();
   @override
   Widget build(BuildContext context) {
-    return Login();
+    return Login(accountProvider: accountProvider);
   }
 }
 
 class Login extends StatefulWidget {
+  Login({super.key, required this.accountProvider});
+  AccountProvider accountProvider = AccountProvider();
 
   @override
   _Login createState () => _Login();
@@ -28,7 +30,8 @@ class _Login extends State<Login> {
   late TextEditingController _email;
   late TextEditingController _password;
   late LoginService _loginService;
-  
+  late AccountProvider _accountProvider = Provider.of(context, listen: false);
+
   @override
   void initState() {
     // TODO: implement initState
@@ -39,7 +42,6 @@ class _Login extends State<Login> {
   }
   
   void onLoginUser() {
-  var accountInfo = Provider.of<AccountDTO>(context);
     String email = _email.text;
     String password = _password.text;
     LoginDTO loginDTO = LoginDTO(email, password);
@@ -53,6 +55,7 @@ class _Login extends State<Login> {
           _email.text = "",
           _password.text = "",
           
+          _accountProvider.setAccountCredentials(AccountDTO(email: response.email, password: response.password)),
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => DashBoard())

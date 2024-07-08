@@ -4,24 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountDTO {
-  String? email;
-  String? password;
+  String email;
+  String password;
 
-  AccountDTO(email, password);
+  AccountDTO({required this.email, required this.password});
 }
 
 class AccountProvider extends ChangeNotifier {
 
-  late AccountDTO accountInfo;
+  final AccountDTO accountInfo = AccountDTO(email: '', password: '');
+  AccountDTO get mapTests => accountInfo;
 
-  void setAccountCredentials(AccountDTO accountInfo) {
-    this.accountInfo = accountInfo;
+  void setAccountCredentials(AccountDTO accountInfoParams) {
+    accountInfo.email = accountInfoParams.email;
+    accountInfo.password = accountInfoParams.password;
 
     notifyListeners();
   }
 
   String getEmail () {
-    return accountInfo.email ?? "no-email-provided";
+    return mapTests.email ?? "no-email-provided";
   }
 
   String getPassword () {
