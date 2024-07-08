@@ -7,6 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heroes/src/features/dashboard/presentation/index.dart';
 import 'package:heroes/src/features/login/data/loginDTO.dart';
 import 'package:heroes/src/features/login/service/login.service.dart';
+import 'package:heroes/src/shared/provider/account.provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -26,7 +28,7 @@ class _Login extends State<Login> {
   late TextEditingController _email;
   late TextEditingController _password;
   late LoginService _loginService;
-
+  
   @override
   void initState() {
     // TODO: implement initState
@@ -37,6 +39,7 @@ class _Login extends State<Login> {
   }
   
   void onLoginUser() {
+  var accountInfo = Provider.of<AccountDTO>(context);
     String email = _email.text;
     String password = _password.text;
     LoginDTO loginDTO = LoginDTO(email, password);
@@ -49,6 +52,7 @@ class _Login extends State<Login> {
         if (code == 200) {
           _email.text = "",
           _password.text = "",
+          
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => DashBoard())

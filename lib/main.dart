@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:heroes/src/features/dashboard/presentation/index.dart';
 import 'package:heroes/src/features/home/presentation/index.dart';
+import 'package:heroes/src/shared/provider/account.provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AccountProvider(),
+      child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
