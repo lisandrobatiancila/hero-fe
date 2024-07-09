@@ -14,6 +14,7 @@ class HireHeroService {
         Uri.parse("http://${SharedConstants.ip}:3000/hire"),
         body: <String, dynamic> {
           'heroID': _stringManipulation.parseNumberToString(hireHero.heroID),
+          'userId': _stringManipulation.parseNumberToString(hireHero.userId),
           'firstName': hireHero.firstName,
           'lastName': hireHero.lastName
         }

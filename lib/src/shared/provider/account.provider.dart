@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountDTO {
+  int userId;
   String email;
   String password;
 
-  AccountDTO({required this.email, required this.password});
+  AccountDTO({required this.userId, required this.email, required this.password});
 }
 
 class AccountProvider extends ChangeNotifier {
 
-  final AccountDTO accountInfo = AccountDTO(email: '', password: '');
+  final AccountDTO accountInfo = AccountDTO(userId: 0, email: '', password: '');
   AccountDTO get mapTests => accountInfo;
 
   void setAccountCredentials(AccountDTO accountInfoParams) {
+    accountInfo.userId = accountInfoParams.userId;
     accountInfo.email = accountInfoParams.email;
     accountInfo.password = accountInfoParams.password;
 

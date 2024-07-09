@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:heroes/src/features/dashboard/service/dashboard.service.dart';
 import 'package:heroes/src/features/details/presentation/index.dart';
 import 'package:heroes/src/features/hire/presentation/index.dart';
+import 'package:heroes/src/features/hired-heroes/presentation/index.dart';
 import 'package:heroes/src/shared/data/hero.domain.dart';
 
 class DashBoardPage extends StatelessWidget {
@@ -53,14 +54,38 @@ class _DashBaord extends State<DashBoard> {
   void onViewHeroDetials (HeroDomain heroList) {
     Navigator.push(context, MaterialPageRoute(builder: (builder) => HeroDetailPage(heroList: heroList,)));
   }
+  
+  void onGoToHiredHeroes() {
+    Navigator.push(context,
+      MaterialPageRoute(builder: (context) => HiredHeroesPage()) 
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
     appBar: AppBar(
-      title: const Text("Dashboard"),
       automaticallyImplyLeading: false,
+      title: const Text("Dashboard"),
       backgroundColor: Colors.green[300],
+      actions: <Widget>[
+        // IconButton(
+        //   icon: const Icon(
+        //     Icons.more_vert,
+        //   ),
+        //   onPressed: () {
+
+        //   },
+        // ),
+        PopupMenuButton(itemBuilder: (context) => [
+            PopupMenuItem(
+              onTap: onGoToHiredHeroes,
+              child: const Text("My hired hero"), 
+            ),
+            const PopupMenuItem(child: Text("Settings"))
+          ]
+        )
+      ],
     ),
     body: ListView.builder(itemCount: heroList.length, itemBuilder: (context, index) {
       return Card(

@@ -21,6 +21,7 @@ class _HirePage extends State<HirePage> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late AccountProvider _accountProvider = Provider.of(context, listen: false);
   // List<HireTestData> records = [
   //   HireTestData(quantity: 10, name: "Tests"),
   //   HireTestData(quantity: 11, name: "Tests1"),
@@ -36,7 +37,7 @@ class _HirePage extends State<HirePage> {
 
   void onSaveHiredHero () {
     if (_formKey.currentState!.validate()) {
-      HireHeroDTO hireHero = HireHeroDTO(hero.id, _firstNameController.text, _lastNameController.text);
+      HireHeroDTO hireHero = HireHeroDTO(hero.id, _accountProvider.accountInfo.userId, _firstNameController.text, _lastNameController.text);
       var response = _hireHeroService.hireHero(hireHero);
 
       response.then((value) {
@@ -44,6 +45,8 @@ class _HirePage extends State<HirePage> {
         var message = value?.message ?? "";
         if (code == 200) {
           Fluttertoast.showToast(msg: message);
+          _firstNameController.text = "";
+          _lastNameController.text = "";
         }
       });
     }

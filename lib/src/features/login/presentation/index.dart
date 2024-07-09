@@ -31,6 +31,7 @@ class _Login extends State<Login> {
   late TextEditingController _password;
   late LoginService _loginService;
   late AccountProvider _accountProvider = Provider.of(context, listen: false);
+  var _loginForm = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -47,23 +48,25 @@ class _Login extends State<Login> {
     LoginDTO loginDTO = LoginDTO(email, password);
 
     try{
-      var resp = _loginService.loginUser(loginDTO);
-      var code = 0;
-      resp.then((response) => {
-        code = response.code,
-        if (code == 200) {
-          _email.text = "",
-          _password.text = "",
-          
-          _accountProvider.setAccountCredentials(AccountDTO(email: response.email, password: response.password)),
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => DashBoard())
-          )
-        } else {
-          Fluttertoast.showToast(msg: response.message)
+      if (_loginForm.currentState!.validate()) {
+          var resp = _loginService.loginUser(loginDTO);
+          var code = 0;
+          resp.then((response) => {
+            code = response.code,
+            if (code == 200) {
+              _email.text = "",
+              _password.text = "",
+              
+              _accountProvider.setAccountCredentials(AccountDTO(userId: response.userId, email: response.email, password: response.password)),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DashBoard())
+              )
+            } else {
+              Fluttertoast.showToast(msg: response.message)
+            }
+          });
         }
-      });
     }
     catch(error) {
       log(error.toString());
@@ -81,11 +84,20 @@ class _Login extends State<Login> {
         padding: const EdgeInsets.all(10.0),
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+          child: Form(
+            key: _loginForm,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
               TextFormField(
                 controller: _email,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Email is empty";
+                  }
+
+                  return  null;
+                },
                 decoration: const InputDecoration(
                   labelText: "Email"
                 ),
@@ -96,6 +108,13 @@ class _Login extends State<Login> {
               ),
               TextFormField(
                 controller: _password,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Password is empty";
+                  }
+
+                  return null;
+                },
                 decoration: const InputDecoration(
                   labelText: "Password"
                 ),
@@ -118,7 +137,8 @@ class _Login extends State<Login> {
                 ),
               )
             ],
-          ),
+            ),
+          )
         ),
       ),
     );
