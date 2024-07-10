@@ -19,6 +19,6 @@ class HireHeroService {
 
       var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
 
-    return ResponseDomain.fromJson(response);
+    return ResponseDomain.fromJson(response, (json) => json);
   }
 }

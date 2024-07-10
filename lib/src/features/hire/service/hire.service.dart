@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:heroes/src/features/hire/data/hireDTO.dart';
+import 'package:heroes/src/features/login/domain/login.domain.dart';
 import 'package:heroes/src/shared/domain/shared.domain.dart';
 import 'package:heroes/src/shared/ip/shared.constant.dart';
 import 'package:heroes/src/utility/string.dart';
@@ -21,12 +22,12 @@ class HireHeroService {
       );
       var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
 
-      return ResponseDomain.fromJson(response);
+      return ResponseDomain.fromJson(response, (json) => json);
     }
     catch(error) {
       print("Error >");
       print(error);
-      return ResponseDomain.fromJson(jsonEncode("{}")as Map<String, dynamic>);
+      return ResponseDomain.fromJson(<String, dynamic> {'': '', '': ''}, (json) => LoginModel.fromJson(json));
     }
 
   }

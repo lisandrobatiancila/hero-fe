@@ -57,7 +57,12 @@ class _Login extends State<Login> {
               _email.text = "",
               _password.text = "",
               
-              _accountProvider.setAccountCredentials(AccountDTO(userId: response.userId, email: response.email, password: response.password)),
+              _accountProvider.setAccountCredentials(
+                AccountProviderDTO(
+                  userId: response.genericClass.userId, 
+                  email: response.genericClass.email, 
+                  password: response.genericClass.password)
+                ),
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => DashBoard())

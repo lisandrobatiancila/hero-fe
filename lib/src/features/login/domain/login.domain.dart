@@ -1,23 +1,24 @@
 class LoginModel {
   int userId;
-  String message;
   String email;
   String password;
-  int code;
 
-  LoginModel({required this.userId, required this.message, required this.code, required this.email, required this.password});
+  LoginModel(this.userId, this.email, this.password);
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) {
-    return switch(json) {
-      {
-        'userId': int userId,
-        'message': String message,
-        'email': String email,
-        'password': String password,
-        'code': int code,
+  // factory LoginModel.fromJson(Map<String, dynamic> json) {
+  //   return switch(json) {
+  //     {
+  //       'message': String message,
+  //       'code': int code,
+  //       'genericDTO': T genericDTO,
         
-      } => LoginModel(userId: userId, message: message, email: email, password: password, code: code),
-      _ => throw const FormatException("Failed Error Login")
-    };
-  }
+  //     } => LoginModel(),
+  //     _ => throw const FormatException("Failed Error Login")
+  //   };
+  // }
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+    json['userId'],
+    json['email'],
+    json['password']
+  );
 }
