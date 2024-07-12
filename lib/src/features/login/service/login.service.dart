@@ -35,7 +35,9 @@ class LoginService {
       if (error is SocketException) {
         Fluttertoast.showToast(msg: "No network detected");
       }
-      return ResponseDomain.fromJson(<String, dynamic> {'email': '', 'password': ''}, (json) => LoginModel.fromJson(json));
+       return ResponseDomain.fromJson(<String, dynamic> {'email': '', 'password': ''}, 
+         (json) => LoginModel.fromJson(json)
+      );
     }
   }
 }

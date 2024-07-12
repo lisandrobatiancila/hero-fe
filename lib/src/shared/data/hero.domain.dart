@@ -19,3 +19,21 @@ class HeroDomain {
     return {'id':id , 'name': id, 'power': power, 'description': description, "hire_count": hiredCount};
   }
 }
+
+class HiredHeroesDomain {
+  int heroId;
+  String name;
+  String power;
+  String description;
+  int hire_count;
+
+  HiredHeroesDomain({
+    required this.heroId, required this.name, 
+    required this.power, required this.description, 
+    required this.hire_count}
+  );
+
+  factory HiredHeroesDomain.fromJson(Map<String, dynamic> json) => 
+    HiredHeroesDomain(heroId: json['id'], name: json['name'], power: json['power'], 
+    description: json['description'], hire_count: json['hire_count']);
+}

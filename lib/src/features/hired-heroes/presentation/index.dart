@@ -21,7 +21,6 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
 
     response.then((value) {
       print("VALUE");
-      print(value.code);
     });
   }
   @override
