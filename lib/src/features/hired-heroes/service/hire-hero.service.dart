@@ -12,7 +12,7 @@ class HeroServiceDTO {
 }
 
 class HireHeroService {
-  Future<void> getAllHiredHero(HeroServiceDTO heroServiceDTO) async {
+  Future<List<HiredHeroesDomain>> getAllHiredHero(HeroServiceDTO heroServiceDTO) async {
 
       try{
         var apiResponse = await http.get(
@@ -20,22 +20,20 @@ class HireHeroService {
         );
 
         var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
-        // List<Map<String, dynamic>> heroeList = response['genericDTO'];
 
-        print(apiResponse.body);
-        // print("CODE ${response['genericDTO']}");
+        List<HiredHeroesDomain> heroeList = [];
         if (response['code'] == 200) {
-          List<Map<String, dynamic>> heroes = [];
-
-          var heroeList = jsonDecode(response['genericDTO']);
+          for(var hl in response['genericDTO']) {
+            heroeList.add(HiredHeroesDomain.fromJson(hl));
+          }
         }
-        // return ResponseDomain.fromJson(response, (json) => HiredHeroesDomain.fromJson(json));
+
+        return heroeList;
       }
       catch(error) {
-        print("ERROR >>> ");
+        print("ERROR >>> filename: hire-hero.service.dart");
         print(error);
-
-        // return ResponseDomain.fromJson({}, (json) => HiredHeroesDomain.fromJson(json));
+        return [];
       }
   }
 }

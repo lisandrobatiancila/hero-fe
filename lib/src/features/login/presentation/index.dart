@@ -59,9 +59,9 @@ class _Login extends State<Login> {
               
               _accountProvider.setAccountCredentials(
                 AccountProviderDTO(
-                  userId: response.genericClass.userId, 
-                  email: response.genericClass.email, 
-                  password: response.genericClass.password)
+                  userId: response.genericClass?.userId ?? 0, 
+                  email: response.genericClass?.email ?? '', 
+                  password: response.genericClass?.password ?? '')
                 ),
               Navigator.push(
                 context,

@@ -48,6 +48,9 @@ class _HirePage extends State<HirePage> {
           _firstNameController.text = "";
           _lastNameController.text = "";
         }
+        else {
+          Fluttertoast.showToast(msg: message);
+        }
       });
     }
   }

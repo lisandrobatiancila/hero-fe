@@ -21,13 +21,13 @@ class HireHeroService {
         }
       );
       var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
-
-      return ResponseDomain.fromJson(response, (json) => json);
+      
+      return ResponseDomain.fromJson(response, null);
     }
     catch(error) {
-      print("Error >");
+      print("Error > presentation/hire.service.dart");
       print(error);
-      return ResponseDomain.fromJson(<String, dynamic> {'': '', '': ''}, (json) => LoginModel.fromJson(json));
+      return ResponseDomain.fromJson(<String, dynamic> {'': '', '': ''}, null);
     }
 
   }
