@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:heroes/src/features/hired-heroes/service/hire-hero.service.dart';
 import 'package:heroes/src/shared/data/hero.domain.dart';
@@ -32,9 +34,76 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
     });
   }
 
-  void onRemoveHiredHero () {
-    
+  void onConfirmRemoveHero (int heroId, int userId) {
+
   }
+
+  void onRemoveHiredHero (HiredHeroesDomain? hero) {
+    showModalBottomSheet(context: context, builder: (BuildContext context) {
+      return SizedBox(
+        height: 200,
+        child: Center(
+          child: Container(
+            margin: const EdgeInsets.only(
+              top: 20.0
+            ),
+            child: Column(              
+              children: <Widget>[
+                const Text("Are you sure you want to remove"),
+                Text(
+                  StringManipulation().upperCaseFirstCharacter(hero!.name),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    top: 50.0
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      ButtonComponent().CustomButton(() {
+                        Navigator.pop(context);
+                      }, 
+                        const Text(
+                          "Cancel",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ), 
+                        OutlinedButton.styleFrom(
+                          backgroundColor: Colors.red[300]
+                        )
+                      ),
+                      const SizedBox(width: 10,),
+                      ButtonComponent().CustomButton(() {
+                        onConfirmRemoveHero(hero!.heroId, _accountProvider!.accountInfo!.userId);
+                      }, 
+                        const Text(
+                          "Confirm",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ), 
+                        OutlinedButton.styleFrom(
+                          backgroundColor: Colors.green[300]
+                        )
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ),
+      );
+    },
+      isDismissible: false
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +140,9 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     ButtonComponent().CustomButton(
-                      onRemoveHiredHero, 
+                      () {
+                        onRemoveHiredHero(heroeList[index]);
+                      }, 
                       const Text(
                         "Remove",
                         style: TextStyle(color: Colors.white)
@@ -82,7 +153,7 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
                     ),
                     const SizedBox(width: 10.0,),
                     ButtonComponent().CustomButton(
-                      onRemoveHiredHero, 
+                      () {}, 
                       const Text("Information"),
                       null
                     )

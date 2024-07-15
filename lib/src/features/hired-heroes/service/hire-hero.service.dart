@@ -36,4 +36,25 @@ class HireHeroService {
         return [];
       }
   }
+
+  Future<ResponseDomain> removeHiredHeroe(String heroId, String userId) async{
+    try{
+      var apiResponse = await http.post(
+        Uri.parse("http://${SharedConstants.ip}:3000/hire/remove-hero"),
+        body:{
+          heroId,
+          userId
+        } 
+      );
+
+      var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
+
+      return ResponseDomain.fromJson(response, (json) => json);
+    }
+    catch(error) {
+      print('ERROR >> hired-heroes/service/hire-hero.service.dart');
+
+      return ResponseDomain.fromJson({}, (json) => json);
+    }
+  }
 }
