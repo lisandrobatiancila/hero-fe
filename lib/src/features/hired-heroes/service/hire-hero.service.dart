@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:heroes/src/shared/data/hero.domain.dart';
 import 'package:heroes/src/shared/domain/shared.domain.dart';
 import 'package:heroes/src/shared/ip/shared.constant.dart';
+import 'package:heroes/src/utility/string.dart';
 import 'package:http/http.dart' as http;
 
 class HeroServiceDTO {
@@ -12,6 +13,8 @@ class HeroServiceDTO {
 }
 
 class HireHeroService {
+  StringManipulation _stringManipulation = StringManipulation();
+
   Future<List<HiredHeroesDomain>> getAllHiredHero(HeroServiceDTO heroServiceDTO) async {
 
       try{
@@ -37,23 +40,24 @@ class HireHeroService {
       }
   }
 
-  Future<ResponseDomain> removeHiredHeroe(String heroId, String userId) async{
+  Future<ResponseDomain> removeHiredHeroe(int heroId, int userId) async{
     try{
+      print("HERO >> $heroId");
       var apiResponse = await http.post(
         Uri.parse("http://${SharedConstants.ip}:3000/hire/remove-hero"),
-        body:{
-          heroId,
-          userId
-        } 
+        body: <String, String> {
+          "heroId": _stringManipulation.parseNumberToString(heroId),
+          "userId": _stringManipulation.parseNumberToString(userId),
+        }
       );
 
       var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
-
+      print(apiResponse.body);
       return ResponseDomain.fromJson(response, (json) => json);
     }
     catch(error) {
       print('ERROR >> hired-heroes/service/hire-hero.service.dart');
-
+      print(error);
       return ResponseDomain.fromJson({}, (json) => json);
     }
   }

@@ -34,8 +34,8 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
     });
   }
 
-  void onConfirmRemoveHero (int heroId, int userId) {
-
+  void onConfirmRemoveHero (int heroId, int userId) async {
+    var response = await _heroServiceDTO.removeHiredHeroe(heroId, userId);
   }
 
   void onRemoveHiredHero (HiredHeroesDomain? hero) {
