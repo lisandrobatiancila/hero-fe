@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:heroes/src/features/hired-heroes/service/hire-hero.service.dart';
 import 'package:heroes/src/shared/data/hero.domain.dart';
 import 'package:heroes/src/shared/presentation/button.dart';
@@ -18,6 +19,7 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
   final HireHeroService _heroServiceDTO = HireHeroService();
   late AccountProvider _accountProvider = Provider.of(context, listen: false);
   List<HiredHeroesDomain> heroeList = [];
+  int _indexHeroToRemove = 0;
 
   @override
   void initState() {
@@ -34,8 +36,15 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
     });
   }
 
-  void onConfirmRemoveHero (int heroId, int userId) async {
+  void onConfirmRemoveHero (int heroId, int userId, int index) async {
     var response = await _heroServiceDTO.removeHiredHeroe(heroId, userId);
+
+    Fluttertoast.showToast(msg: response.message);
+    Navigator.pop(context);
+    heroeList.removeAt(index);
+    setState(() {
+      
+    });
   }
 
   void onRemoveHiredHero (HiredHeroesDomain? hero) {
@@ -66,7 +75,7 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
                     children: <Widget>[
                       ButtonComponent().CustomButton(() {
                         Navigator.pop(context);
-                      }, 
+                      },
                         const Text(
                           "Cancel",
                           style: TextStyle(
@@ -79,7 +88,7 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
                       ),
                       const SizedBox(width: 10,),
                       ButtonComponent().CustomButton(() {
-                        onConfirmRemoveHero(hero!.heroId, _accountProvider!.accountInfo!.userId);
+                        onConfirmRemoveHero(hero!.heroId, _accountProvider!.accountInfo!.userId, _indexHeroToRemove );
                       }, 
                         const Text(
                           "Confirm",
@@ -113,7 +122,10 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
         title: const Text("Hired Heroes"),
         backgroundColor: Colors.green[300],
       ),
-      body: ListView.builder(
+      body: Container(
+        child: heroeList.isEmpty ? const Text("No records..") 
+        :
+        ListView.builder(
         itemCount: heroeList.length,
         itemBuilder: (context, index) {
           return Container(
@@ -141,6 +153,7 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
                   children: <Widget>[
                     ButtonComponent().CustomButton(
                       () {
+                        _indexHeroToRemove = index;
                         onRemoveHiredHero(heroeList[index]);
                       }, 
                       const Text(
@@ -163,6 +176,7 @@ class _HiredHeroesPage extends State<HiredHeroesPage> {
             ),
           );
       }),
+      )
     );
   }
 }

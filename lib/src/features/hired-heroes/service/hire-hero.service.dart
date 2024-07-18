@@ -52,13 +52,12 @@ class HireHeroService {
       );
 
       var response = jsonDecode(apiResponse.body) as Map<String, dynamic>;
-      print(apiResponse.body);
       return ResponseDomain.fromJson(response, (json) => json);
     }
     catch(error) {
       print('ERROR >> hired-heroes/service/hire-hero.service.dart');
       print(error);
-      return ResponseDomain.fromJson({}, (json) => json);
+      return ResponseDomain.fromJson({}, (json) => null);
     }
   }
 }
